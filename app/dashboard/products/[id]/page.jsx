@@ -1,16 +1,11 @@
+import { updateProduct } from "@/app/lib/actions";
+import { fetchProduct } from "@/app/lib/data";
 import styles from "@/app/ui/dashboard/products/singleProduct/singleProduct.module.css";
 import Image from "next/image";
 
-const SingleProductPage = async () => {
- let product = {
-    id:'jhfi37t',
-    title:'Product',
-    price:300,
-    stock:23,
-    color:'blue',
-    size:'large',
-    desc:'wwehfu8y89 sadhui'
- }
+const SingleProductPage = async ({ params }) => {
+  const { id } = params;
+  const product = await fetchProduct(id);
 
   return (
     <div className={styles.container}>
@@ -21,7 +16,7 @@ const SingleProductPage = async () => {
         {product.title}
       </div>
       <div className={styles.formContainer}>
-        <form action='' className={styles.form}>
+        <form action={updateProduct} className={styles.form}>
           <input type="hidden" name="id" value={product.id} />
           <label>Title</label>
           <input type="text" name="title" placeholder={product.title} />
@@ -53,7 +48,7 @@ const SingleProductPage = async () => {
             rows="10"
             placeholder={product.desc}
           ></textarea>
-          <button>Update</button>
+          <button type="submit">Update</button>
         </form>
       </div>
     </div>
